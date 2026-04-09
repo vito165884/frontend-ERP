@@ -1,0 +1,120 @@
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
+import { createProvider } from '@/lib/api/providers';
+
+export default function CreateSupplierPage() {
+  const router = useRouter();
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [nom, setNom] = useState('');
+  const [tel, setTel] = useState('');
+  const [mail, setMail] = useState('');
+  const [adresse, setAdresse] = useState('');
+  const [matricule, setMatricule] = useState('');
+  const [code, setCode] = useState('');
+  const [codeCat, setCodeCat] = useState('');
+  const [etbSec, setEtbSec] = useState('');
+  const [constructeur, setConstructeur] = useState(false);
+
+  async function onSave() {
+    setSaving(true);
+    setError(null);
+    try {
+      if (!nom.trim()) throw new Error('Name is required');
+      if (!tel.trim()) throw new Error('Phone is required');
+      const id = await createProvider({
+        nom: nom.trim(),
+        tel: tel.trim(),
+        mail: mail.trim() || null,
+        adresse: adresse.trim() || null,
+        matricule: matricule.trim() || null,
+        code: code.trim() || null,
+        codeCat: codeCat.trim() || null,
+        etbSec: etbSec.trim() || null,
+        constructeur,
+        exonereRetenueSource: false,
+      });
+      router.replace(`/suppliers/${id}`);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Failed to create supplier');
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="space-y-6 p-8">
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground">Add supplier</h1>
+          <p className="text-muted-foreground mt-2">POST /providers</p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => router.push('/suppliers')}>
+            Back
+          </Button>
+          <Button onClick={onSave} disabled={saving}>
+            {saving ? 'Saving…' : 'Save'}
+          </Button>
+        </div>
+      </div>
+
+      {error ? (
+        <Card className="p-4 border-border">
+          <div className="text-sm text-red-600">{error}</div>
+        </Card>
+      ) : null}
+
+      <Card className="p-6 border-border">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Name *</div>
+            <Input value={nom} onChange={(e) => setNom(e.target.value)} />
+          </div>
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Phone *</div>
+            <Input value={tel} onChange={(e) => setTel(e.target.value)} />
+          </div>
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Email</div>
+            <Input value={mail} onChange={(e) => setMail(e.target.value)} />
+          </div>
+          <div className="space-y-1 md:col-span-2">
+            <div className="text-sm text-muted-foreground">Address</div>
+            <Input value={adresse} onChange={(e) => setAdresse(e.target.value)} />
+          </div>
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Matricule</div>
+            <Input value={matricule} onChange={(e) => setMatricule(e.target.value)} />
+          </div>
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Code</div>
+            <Input value={code} onChange={(e) => setCode(e.target.value)} />
+          </div>
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">Category code</div>
+            <Input value={codeCat} onChange={(e) => setCodeCat(e.target.value)} />
+          </div>
+          <div className="space-y-1">
+            <div className="text-sm text-muted-foreground">ETB SEC</div>
+            <Input value={etbSec} onChange={(e) => setEtbSec(e.target.value)} />
+          </div>
+          <div className="flex items-center justify-between rounded-lg border border-border p-3 md:col-span-2">
+            <div>
+              <div className="text-sm font-medium">Manufacturer (constructeur)</div>
+              <div className="text-xs text-muted-foreground">Flag used in purchasing</div>
+            </div>
+            <Switch checked={constructeur} onCheckedChange={setConstructeur} />
+          </div>
+        </div>
+      </Card>
+    </div>
+  );
+}

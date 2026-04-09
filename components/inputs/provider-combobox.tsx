@@ -1,0 +1,124 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { ChevronsUpDown, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { getProviders, type Provider } from "@/lib/api/providers";
+
+export function ProviderCombobox({
+  value,
+  onChange,
+  placeholder = "Select a supplier",
+  disabled,
+}: {
+  value: number | null;
+  onChange: (id: number | null, provider?: Provider | null) => void;
+  placeholder?: string;
+  disabled?: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [items, setItems] = useState<Provider[]>([]);
+  const [selected, setSelected] = useState<Provider | null>(null);
+
+  const label = useMemo(() => selected?.nom ?? (value ? `#${value}` : ""), [selected, value]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      try {
+        const resp = await getProviders({
+          pageNumber: 1,
+          pageSize: 20,
+          searchKeyword: query.trim() || null,
+        });
+        if (cancelled) return;
+        setItems(resp.items ?? []);
+      } catch {
+        if (!cancelled) setItems([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+
+    const handle = setTimeout(() => void load(), 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    if (!value) {
+      setSelected(null);
+      return;
+    }
+    const match = items.find((p) => p.id === value);
+    if (match) setSelected(match);
+  }, [value, items]);
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+          disabled={disabled}
+        >
+          {label || placeholder}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0" align="start">
+        <Command shouldFilter={false}>
+          <CommandInput placeholder="Search supplier..." value={query} onValueChange={setQuery} />
+          <CommandList>
+            <CommandEmpty>{loading ? "Loading…" : "No supplier found."}</CommandEmpty>
+            <CommandGroup>
+              <CommandItem
+                value="__clear"
+                onSelect={() => {
+                  onChange(null, null);
+                  setSelected(null);
+                  setOpen(false);
+                }}
+              >
+                <Check className={cn("mr-2 h-4 w-4", value ? "opacity-0" : "opacity-100")} />
+                Clear
+              </CommandItem>
+              {items.map((p) => (
+                <CommandItem
+                  key={p.id}
+                  value={String(p.id)}
+                  onSelect={() => {
+                    setSelected(p);
+                    onChange(p.id, p);
+                    setOpen(false);
+                  }}
+                >
+                  <Check className={cn("mr-2 h-4 w-4", value === p.id ? "opacity-100" : "opacity-0")} />
+                  <span className="truncate">{p.nom}</span>
+                  <span className="ml-2 text-xs text-muted-foreground">#{p.id}</span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}

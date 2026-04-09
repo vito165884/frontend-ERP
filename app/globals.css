@@ -1,0 +1,228 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --card: rgba(0, 0, 0, 0.6);
+  --card-foreground: #ffffff;
+  --popover: rgba(0, 0, 0, 0.7);
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: rgba(50, 50, 50, 0.5);
+  --secondary-foreground: #ffffff;
+  --muted: #808080;
+  --muted-foreground: #b0b0b0;
+  --accent: #ffffff;
+  --accent-foreground: #000000;
+  --destructive: #ff5555;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #ffffff;
+  --chart-1: #ffffff;
+  --chart-2: #d0d0d0;
+  --chart-3: #a0a0a0;
+  --chart-4: #707070;
+  --chart-5: #404040;
+  --radius: 0.75rem;
+  --sidebar: rgba(0, 0, 0, 0.5);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: rgba(255, 255, 255, 0.12);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+  --sidebar-ring: #ffffff;
+}
+
+
+
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: -0.3px;
+    background-image: url('/images/bg-gradient.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: multiply;
+  }
+  
+  /* Glassmorphism utility classes - pure black and white */
+  .glass {
+    @apply backdrop-blur-xl bg-white/8 border border-white/15;
+  }
+  
+  .glass-sm {
+    @apply backdrop-blur-md bg-white/5 border border-white/10;
+  }
+  
+  .glass-lg {
+    @apply backdrop-blur-2xl bg-white/12 border border-white/20;
+  }
+
+  /* Remove excessive shadows and borders for minimalist feel */
+  [data-slot="card"] {
+    @apply shadow-sm;
+  }
+
+  /* Subtle focus states */
+  :focus-visible {
+    @apply outline-none ring-1 ring-white/20;
+  }
+
+  /* Smooth transitions everywhere */
+  * {
+    @apply transition-colors duration-200;
+  }
+
+  /* Typography hierarchy */
+  h1 {
+    @apply text-4xl font-bold tracking-tight;
+  }
+  
+  h2 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  
+  h3 {
+    @apply text-lg font-semibold tracking-tight;
+  }
+  
+  h4 {
+    @apply text-base font-semibold tracking-tight;
+  }
+  
+  p {
+    @apply text-sm leading-relaxed;
+  }
+
+  /* Input styling - minimalist underline with black/white theme */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  select {
+    @apply bg-transparent border-0 border-b border-border px-0 py-2.5 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-b-2 focus:border-foreground transition-all duration-200;
+  }
+
+  /* Hide number input spinners (match minimalist inputs) */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  /* Input component override */
+  .input {
+    @apply bg-transparent border-0 border-b border-border px-0 py-2.5 rounded-none text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-b-2 focus-visible:border-foreground transition-all duration-200;
+  }
+
+  /* Button styling with animations */
+  button {
+    @apply transition-all duration-200;
+  }
+
+  /* Card refinements */
+  [role="dialog"] {
+    @apply shadow-2xl;
+  }
+
+  /* Smooth animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .slide-up {
+    animation: slideUp 0.3s ease-in-out;
+  }
+
+  .slide-in {
+    animation: slideIn 0.3s ease-in-out;
+  }
+}
