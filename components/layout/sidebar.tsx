@@ -153,7 +153,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       <aside
         className={cn(
-          'glass-sm fixed left-0 top-16 bottom-0 w-64 overflow-y-auto transition-all duration-300 lg:static lg:top-0 z-40',
+          'glass-sm fixed left-0 top-16 bottom-0 w-64 max-h-[calc(100vh-4rem)] overflow-y-auto transition-all duration-300 lg:static lg:top-0 lg:max-h-screen z-40',
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
@@ -172,14 +172,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 className={cn(
                   'w-full flex items-center justify-between px-3 py-2.5 text-sm font-semibold transition-all duration-200 rounded-lg',
                   expandedItems.includes(item.label)
-                    ? 'text-foreground bg-white/12'
-                    : 'text-sidebar-foreground hover:text-foreground hover:bg-white/8'
+                    ? 'text-blue-400 bg-blue-500/10 border border-blue-500/20'
+                    : 'text-gray-400 hover:text-foreground hover:bg-white/8 hover:border-white/10 border border-transparent'
                 )}
               >
                 <div className="flex items-center gap-3">
                   <div className={cn(
                     'h-5 w-5 transition-all duration-200',
-                    expandedItems.includes(item.label) ? 'text-foreground' : 'text-muted-foreground'
+                    expandedItems.includes(item.label) ? 'text-blue-400' : 'text-gray-500 group-hover:text-gray-300'
                   )}>
                     {item.icon}
                   </div>
@@ -196,17 +196,17 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               </button>
 
               {expandedItems.includes(item.label) && item.children && (
-                <div className="space-y-0.5 mt-2 pb-1.5">
+                <div className="space-y-1 mt-2 pb-2">
                   {item.children.map((child) => (
                     <Link
                       key={child.href}
                       href={child.href || '#'}
                       onClick={onClose}
                       className={cn(
-                        'block px-3 py-2 text-xs transition-all duration-200 ml-3 border-l-2 pl-3 rounded-r-lg font-medium',
+                        'block px-3 py-1.5 text-xs transition-all duration-200 ml-6 border-l-2 pl-3 rounded-r-lg font-medium',
                         isActive(child.href)
-                          ? 'text-foreground border-l-white bg-white/12'
-                          : 'text-muted-foreground hover:text-foreground border-l-white/20 hover:bg-white/8'
+                          ? 'text-blue-400 border-l-blue-500 bg-blue-500/10 hover:bg-blue-500/15'
+                          : 'text-gray-500 hover:text-gray-300 border-l-gray-600 hover:bg-white/5 hover:border-l-gray-500'
                       )}
                     >
                       {child.label}

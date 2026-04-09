@@ -259,11 +259,11 @@ export default function QuotationsPage() {
   }, [router, load]);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="page-content bg-black">
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div className="space-y-1">
-          <h1 className="text-4xl font-bold text-foreground">Quotations</h1>
-          <p className="text-muted-foreground">Customer quotations (OData list), validate and duplicate.</p>
+        <div className="page-header border-l-4 border-l-blue-500 pl-5">
+          <h1 className="page-title">Quotations</h1>
+          <p className="page-subtitle">Customer quotations (OData list), validate and duplicate.</p>
         </div>
         <div className="flex gap-2">
           <Button

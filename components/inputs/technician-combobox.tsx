@@ -79,7 +79,7 @@ export function TechnicianCombobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[360px] p-0" align="start">
+      <PopoverContent className="w-full min-w-[360px] p-0" align="start" side="bottom" sideOffset={8}>
         <Command shouldFilter={false}>
           <CommandInput placeholder="Search installers..." value={query} onValueChange={setQuery} />
           <CommandList>

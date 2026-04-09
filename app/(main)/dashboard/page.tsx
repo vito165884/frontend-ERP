@@ -39,16 +39,16 @@ const salesData = [
 ];
 
 const productData = [
-  { name: 'Product A', value: 35, color: '#ffffff' },
-  { name: 'Product B', value: 28, color: '#cccccc' },
-  { name: 'Product C', value: 20, color: '#999999' },
-  { name: 'Product D', value: 17, color: '#666666' },
+  { name: 'Product A', value: 35, color: '#3b82f6' },
+  { name: 'Product B', value: 28, color: '#60a5fa' },
+  { name: 'Product C', value: 20, color: '#93c5fd' },
+  { name: 'Product D', value: 17, color: '#bfdbfe' },
 ];
 
 const customerData = [
-  { name: 'Enterprise', value: 42, color: '#ffffff' },
-  { name: 'SMB', value: 38, color: '#cccccc' },
-  { name: 'Startup', value: 20, color: '#999999' },
+  { name: 'Enterprise', value: 42, color: '#3b82f6' },
+  { name: 'SMB', value: 38, color: '#60a5fa' },
+  { name: 'Startup', value: 20, color: '#93c5fd' },
 ];
 
 const recentTransactions = [
@@ -61,11 +61,11 @@ const recentTransactions = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-8 p-8 bg-gradient-to-br from-black via-black to-gray-900">
+    <div className="page-content bg-black">
       {/* Page Header */}
-      <div className="space-y-3">
-        <h1 className="text-6xl font-bold text-white tracking-tight">Dashboard</h1>
-        <p className="text-gray-400 text-lg font-medium">
+      <div className="page-header border-l-4 border-l-blue-500 pl-5">
+        <h1 className="page-title">Dashboard</h1>
+        <p className="page-subtitle">
           Monitor your business metrics and key performance indicators in real-time
         </p>
       </div>
@@ -120,12 +120,12 @@ export default function DashboardPage() {
               <AreaChart data={salesData}>
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ffffff" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#ffffff" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="colorPurchases" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#cccccc" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#cccccc" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#60a5fa" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#60a5fa" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
@@ -134,7 +134,7 @@ export default function DashboardPage() {
                 <Tooltip
                   contentStyle={{
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
                     borderRadius: '8px',
                     backdropFilter: 'blur(10px)',
                   }}
@@ -144,7 +144,7 @@ export default function DashboardPage() {
                 <Area
                   type="monotone"
                   dataKey="sales"
-                  stroke="#ffffff"
+                  stroke="#3b82f6"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorSales)"
@@ -153,7 +153,7 @@ export default function DashboardPage() {
                 <Area
                   type="monotone"
                   dataKey="purchases"
-                  stroke="#b0b0b0"
+                  stroke="#60a5fa"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorPurchases)"
@@ -204,7 +204,7 @@ export default function DashboardPage() {
               <Tooltip
                 contentStyle={{
                   backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(59, 130, 246, 0.3)',
                   borderRadius: '8px',
                   backdropFilter: 'blur(10px)',
                 }}
@@ -214,16 +214,16 @@ export default function DashboardPage() {
               <Line
                 type="monotone"
                 dataKey="sales"
-                stroke="#ffffff"
+                stroke="#3b82f6"
                 strokeWidth={3}
-                dot={{ fill: '#ffffff', r: 5 }}
+                dot={{ fill: '#3b82f6', r: 5 }}
                 activeDot={{ r: 7 }}
                 animationDuration={1000}
               />
               <Line
                 type="monotone"
                 dataKey="target"
-                stroke="#808080"
+                stroke="#6b7280"
                 strokeWidth={2}
                 strokeDasharray="5 5"
                 animationDuration={1000}

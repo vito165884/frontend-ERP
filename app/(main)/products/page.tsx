@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { deleteProductByReference, getProducts, type Product as ApiProduct } from '@/lib/api/products';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type Product = ApiProduct;
 
@@ -67,7 +68,7 @@ const columns = (onDelete: (refe: string) => void): Column<Product>[] => [
     sortable: false,
     width: '70px',
     render: (value) => (
-      <Button variant="ghost" size="icon" onClick={() => onDelete(String(value))} title="Delete">
+      <Button variant="ghost" size="icon" onClick={() => onDelete(String(value))} title="Delete" className="text-red-600 hover:text-red-500 hover:bg-red-600/20">
         <Trash2 className="h-4 w-4" />
       </Button>
     ),
@@ -107,36 +108,48 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="space-y-8 p-6">
-      <div>
-        <h1 className="text-3xl font-bold text-foreground">Products</h1>
-        <p className="text-muted-foreground mt-2">
+    <div className="page-content bg-black">
+      <div className="page-header border-l-4 border-l-blue-500 pl-5">
+        <h1 className="page-title">Products</h1>
+        <p className="page-subtitle">
           Manage your product inventory and stock levels.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="p-6 border-border">
-          <p className="text-sm font-medium text-muted-foreground">Total Products</p>
-          <p className="text-3xl font-bold text-foreground mt-2">{products.length}</p>
+        <Card className="p-6 border-border border-l-4 border-l-blue-500 hover:border-blue-500/60 transition-colors">
+          <p className="text-sm font-medium text-blue-400">Total Products</p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-foreground mt-2">{products.length}</p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">
-            ${kpis.totalValue.toLocaleString()} inventory value
+            {loading ? <Skeleton className="h-4 w-32" /> : `$${kpis.totalValue.toLocaleString()} inventory value`}
           </p>
         </Card>
-        <Card className="p-6 border-border">
-          <p className="text-sm font-medium text-muted-foreground">Low Stock</p>
-          <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 mt-2">
-            {kpis.lowStockCount}
-          </p>
+        <Card className="p-6 border-border border-l-4 border-l-yellow-500 hover:border-yellow-500/60 transition-colors">
+          <p className="text-sm font-medium text-yellow-400">Low Stock</p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-yellow-400 mt-2">
+              {kpis.lowStockCount}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">
             Need restocking soon
           </p>
         </Card>
-        <Card className="p-6 border-border">
-          <p className="text-sm font-medium text-muted-foreground">Out of Stock</p>
-          <p className="text-3xl font-bold text-red-600 dark:text-red-400 mt-2">
-            {kpis.outOfStockCount}
-          </p>
+        <Card className="p-6 border-border border-l-4 border-l-red-500 hover:border-red-500/60 transition-colors">
+          <p className="text-sm font-medium text-red-400">Out of Stock</p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-red-400 mt-2">
+              {kpis.outOfStockCount}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">
             Immediate restocking needed
           </p>

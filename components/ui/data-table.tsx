@@ -2,6 +2,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ChevronUp, ChevronDown, Search, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -109,13 +110,13 @@ export function DataTable<T extends Record<string, any>>({
       <div className="p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h3 className="text-xl font-bold text-foreground">{title}</h3>
+            <h3 className="text-lg font-semibold text-white">{title}</h3>
             {description && (
-              <p className="text-base text-muted-foreground mt-1.5">{description}</p>
+              <p className="text-sm text-gray-400 mt-1.5">{description}</p>
             )}
           </div>
           {onAddClick && (
-            <Button onClick={onAddClick}>
+            <Button onClick={onAddClick} className="bg-blue-600 hover:bg-blue-700 text-white">
               <Plus className="mr-2 h-5 w-5" />
               Add New
             </Button>
@@ -124,12 +125,12 @@ export function DataTable<T extends Record<string, any>>({
 
         {onSearchChange && (
           <div className="mb-6 relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-400" />
             <Input
               placeholder={searchPlaceholder}
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="pl-12 bg-secondary/30"
+              className="pl-12 bg-white/5 border-white/10 focus:border-blue-500"
             />
           </div>
         )}
@@ -137,7 +138,7 @@ export function DataTable<T extends Record<string, any>>({
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border">
+              <tr className="border-b border-blue-500/30 bg-blue-500/5">
                 {selectable && (
                   <th className="px-4 py-3 w-12">
                     <Checkbox
@@ -151,7 +152,7 @@ export function DataTable<T extends Record<string, any>>({
                   <th
                     key={column.id ?? String(column.key)}
                     className={cn(
-                      'px-5 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider',
+                      'px-5 py-3 text-left text-xs font-semibold text-blue-300 uppercase tracking-wider',
                       column.width
                     )}
                   >
@@ -178,11 +179,23 @@ export function DataTable<T extends Record<string, any>>({
             </thead>
             <tbody>
               {loading ? (
-                <tr>
-                  <td colSpan={columns.length + (selectable ? 1 : 0)} className="px-4 py-8 text-center text-muted-foreground">
-                    Loading...
-                  </td>
-                </tr>
+                Array.from({ length: 6 }).map((_, rowIdx) => (
+                  <tr key={`skeleton-${rowIdx}`} className="border-b border-white/5 bg-white/5">
+                    {selectable && (
+                      <td className="px-5 py-3 w-12">
+                        <Skeleton className="h-4 w-4" />
+                      </td>
+                    )}
+                    {columns.map((column) => (
+                      <td
+                        key={column.id ?? String(column.key)}
+                        className={cn('px-5 py-3', column.width)}
+                      >
+                        <Skeleton className="h-4 w-32" />
+                      </td>
+                    ))}
+                  </tr>
+                ))
               ) : sortedData.length === 0 ? (
                 <tr>
                   <td colSpan={columns.length + (selectable ? 1 : 0)} className="px-4 py-8 text-center text-muted-foreground">
@@ -194,8 +207,9 @@ export function DataTable<T extends Record<string, any>>({
                   <tr
                     key={String(getRowStableId(row, idx))}
                     className={cn(
-                      'border-b border-border/50 hover:bg-secondary/30 transition-all duration-200',
-                      selectedRows.has(getRowStableId(row, idx)) && 'bg-secondary/50'
+                      'border-b border-white/5 hover:bg-blue-500/10 transition-all duration-200',
+                      idx % 2 === 0 && 'bg-white/2',
+                      selectedRows.has(getRowStableId(row, idx)) && 'bg-blue-500/20'
                     )}
                   >
                     {selectable && (
@@ -210,7 +224,7 @@ export function DataTable<T extends Record<string, any>>({
                     {columns.map((column) => (
                       <td
                         key={column.id ?? String(column.key)}
-                        className={cn('px-5 py-4 text-muted-foreground text-base', column.width)}
+                        className={cn('px-5 py-3 text-gray-300 text-sm', column.width)}
                       >
                         {column.render
                           ? column.render(row[column.key], row)

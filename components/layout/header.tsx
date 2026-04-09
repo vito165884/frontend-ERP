@@ -36,20 +36,20 @@ export function Header({ onToggleSidebar, isDarkMode, onToggleDarkMode }: Header
   };
 
   return (
-    <header className="sticky top-0 z-40 glass">
+    <header className="sticky top-0 z-40 bg-white/5 border-b border-white/10 backdrop-blur-xl">
       <div className="flex h-16 items-center justify-between px-8 gap-4">
         <div className="flex items-center gap-4 flex-1">
           <Button
             variant="ghost"
             size="icon"
             onClick={onToggleSidebar}
-            className="lg:hidden h-9 w-9"
+            className="lg:hidden h-9 w-9 hover:bg-white/10"
           >
             <Menu className="h-5 w-5" />
           </Button>
 
           <div className="hidden lg:flex items-center gap-3">
-            <div className="h-8 w-8 bg-white text-primary-foreground rounded-lg flex items-center justify-center font-bold text-sm">S</div>
+            <div className="h-8 w-8 bg-blue-600 text-white rounded-lg flex items-center justify-center font-bold text-sm shadow-lg shadow-blue-500/30">S</div>
             <h1 className="font-bold text-lg text-foreground">Silk Road</h1>
           </div>
         </div>
@@ -57,7 +57,7 @@ export function Header({ onToggleSidebar, isDarkMode, onToggleDarkMode }: Header
         <div className="flex items-center gap-1.5">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="hidden sm:inline-flex gap-1 h-8 text-xs">
+              <Button variant="ghost" size="sm" className="hidden sm:inline-flex gap-1 h-8 text-xs hover:bg-white/10 hover:text-blue-400 transition-colors">
                 {selectedYear}
                 <ChevronDown className="h-3 w-3" />
               </Button>
@@ -80,8 +80,8 @@ export function Header({ onToggleSidebar, isDarkMode, onToggleDarkMode }: Header
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-secondary transition-all">
-                <div className="flex items-center justify-center w-7 h-7 bg-secondary rounded-md text-foreground text-xs font-bold border border-border">
+              <Button variant="ghost" size="icon" className="h-9 w-9 hover:bg-blue-500/20 transition-all">
+                <div className="flex items-center justify-center w-7 h-7 bg-gradient-to-br from-blue-600 to-blue-500 rounded-md text-white text-xs font-bold border border-blue-400/50 shadow-lg shadow-blue-500/20">
                   {isMounted ? (user?.name?.charAt(0).toUpperCase() || 'U') : 'U'}
                 </div>
               </Button>

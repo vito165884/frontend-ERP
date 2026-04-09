@@ -5,24 +5,24 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-bold transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-white/40 focus-visible:ring-white/30 focus-visible:ring-[2px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-semibold transition-all duration-150 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        default: 'backdrop-blur-md bg-white text-primary-foreground hover:bg-white/85 shadow-lg hover:shadow-2xl',
+        default: 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md',
         destructive:
-          'backdrop-blur-md bg-destructive text-primary-foreground hover:bg-destructive/85 focus-visible:ring-destructive/40 shadow-lg hover:shadow-xl',
+          'bg-red-600 text-white hover:bg-red-700 shadow-sm hover:shadow-md',
         outline:
-          'backdrop-blur-md border border-white/20 text-foreground hover:bg-white/12 hover:border-white/40 transition-all duration-200',
+          'border border-white/20 text-foreground hover:border-blue-500/40 hover:bg-blue-500/10 hover:text-blue-300',
         secondary:
-          'backdrop-blur-md bg-white/12 border border-white/15 text-secondary-foreground hover:bg-white/18 transition-all duration-200',
+          'bg-white/8 border border-white/10 text-gray-200 hover:bg-white/12 hover:border-white/20',
         ghost:
-          'hover:bg-white/12 text-foreground transition-all duration-200',
-        link: 'text-foreground underline-offset-4 hover:underline',
+          'text-foreground hover:bg-white/8 hover:text-white',
+        link: 'text-blue-400 underline-offset-4 hover:text-blue-300 hover:underline',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
+        sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5 text-xs',
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
         icon: 'size-9',
         'icon-sm': 'size-8',

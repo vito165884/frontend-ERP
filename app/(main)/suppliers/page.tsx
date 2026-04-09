@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { deleteProvider, getProviders, type Provider } from '@/lib/api/providers';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const columns: Column<Provider>[] = [
   {
@@ -82,27 +83,35 @@ export default function SuppliersPage() {
   const count = useMemo(() => providers.length, [providers]);
 
   return (
-    <div className="space-y-8 p-8">
+    <div className="page-content bg-black">
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div className="space-y-2">
-          <h1 className="text-5xl font-bold text-foreground">Suppliers</h1>
-          <p className="text-muted-foreground text-base">
+        <div className="page-header border-l-4 border-l-blue-500 pl-5 flex-1">
+          <h1 className="page-title">Suppliers</h1>
+          <p className="page-subtitle">
             Provider accounts from GET /providers (same as Razor fournisseurs list).
           </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Card className="p-6 border-border">
-          <p className="text-sm font-medium text-muted-foreground">Loaded</p>
-          <p className="text-3xl font-bold text-foreground mt-2">{count}</p>
+        <Card className="p-6 border-border border-l-4 border-l-blue-500 hover:border-blue-500/60 transition-colors">
+          <p className="text-sm font-medium text-blue-400">Loaded</p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-foreground mt-2">{count}</p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">First page (max 50)</p>
         </Card>
-        <Card className="p-6 border-border">
-          <p className="text-sm font-medium text-muted-foreground">Manufacturers</p>
-          <p className="text-3xl font-bold text-foreground mt-2">
-            {providers.filter((p) => p.constructeur).length}
-          </p>
+        <Card className="p-6 border-border border-l-4 border-l-blue-500 hover:border-blue-500/60 transition-colors">
+          <p className="text-sm font-medium text-blue-400">Manufacturers</p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-foreground mt-2">
+              {providers.filter((p) => p.constructeur).length}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">constructeur = true</p>
         </Card>
       </div>
@@ -126,6 +135,7 @@ export default function SuppliersPage() {
                   variant="outline"
                   size="icon"
                   title="View"
+                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
                   onClick={() => router.push(`/suppliers/${row.id}`)}
                 >
                   <Eye className="h-4 w-4" />
@@ -134,6 +144,7 @@ export default function SuppliersPage() {
                   variant="outline"
                   size="icon"
                   title="Edit"
+                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
                   onClick={() => router.push(`/suppliers/${row.id}/edit`)}
                 >
                   <Pencil className="h-4 w-4" />
@@ -142,7 +153,7 @@ export default function SuppliersPage() {
                   variant="outline"
                   size="icon"
                   title="Delete"
-                  className="text-red-600 hover:text-red-700"
+                  className="text-red-600 hover:text-red-500 hover:bg-red-600/20 hover:border-red-500/50"
                   onClick={async () => {
                     if (!window.confirm('Delete this supplier?')) return;
                     try {
