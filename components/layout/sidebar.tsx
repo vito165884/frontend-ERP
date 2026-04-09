@@ -153,7 +153,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       <aside
         className={cn(
-          'glass-sm fixed left-0 top-16 bottom-0 w-64 overflow-y-auto transition-all duration-300 lg:static lg:top-0 z-40',
+          'glass-sm fixed left-0 top-16 bottom-0 w-64 max-h-[calc(100vh-4rem)] overflow-y-auto transition-all duration-300 lg:static lg:top-0 lg:max-h-screen z-40',
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
