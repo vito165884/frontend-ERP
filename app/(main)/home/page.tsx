@@ -124,11 +124,11 @@ const secondaryItems = [
 
 export default function HomePage() {
   return (
-    <div className="space-y-8 p-8 bg-black">
+    <div className="page-content bg-black">
       {/* Page Header */}
-      <div className="space-y-2 border-l-4 border-l-blue-500 pl-5">
-        <h1 className="text-4xl font-bold text-foreground tracking-tight">Welcome to Silk Road</h1>
-        <p className="text-muted-foreground text-sm">
+      <div className="page-header border-l-4 border-l-blue-500 pl-5">
+        <h1 className="page-title">Welcome to Silk Road</h1>
+        <p className="page-subtitle">
           Quick access to your most used features and tools
         </p>
       </div>
@@ -138,23 +138,23 @@ export default function HomePage() {
         {quickAccessItems.map((item) => (
           <Card
             key={item.title}
-            className={`group relative overflow-hidden border-border hover:border-white/30 transition-all duration-300`}
+            className={`card-interactive group relative overflow-hidden border-l-4 border-l-blue-500`}
           >
-            <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-50`} />
+            <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-40`} />
             <div className="relative p-6">
               <div className="flex items-start justify-between mb-4">
-                <div className="h-12 w-12 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
+                <div className="h-12 w-12 rounded-lg bg-blue-600/30 border border-blue-500/50 flex items-center justify-center text-blue-300 group-hover:bg-blue-600/40 transition-colors">
                   {item.icon}
                 </div>
                 <Link
                   href={item.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-blue-400 hover:text-blue-300 transition-colors group-hover:translate-x-1 transform duration-200"
                 >
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-1">{item.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{item.description}</p>
+              <h3 className="text-lg font-semibold text-white mb-1">{item.title}</h3>
+              <p className="text-sm text-gray-400 mb-4">{item.description}</p>
               {item.actions && (
                 <div className="flex gap-3">
                   {item.actions.map((action, idx) => (

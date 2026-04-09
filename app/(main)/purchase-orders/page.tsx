@@ -168,11 +168,11 @@ export default function PurchaseOrdersPage() {
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="page-content bg-black">
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">Orders</h1>
-          <p className="text-muted-foreground mt-2">Purchase orders (Razor: /orders, /commandes). Data from GET /api/orders.</p>
+        <div className="page-header border-l-4 border-l-blue-500 pl-5">
+          <h1 className="page-title">Orders</h1>
+          <p className="page-subtitle">Purchase orders (Razor: /orders, /commandes). Data from GET /api/orders.</p>
         </div>
         <div className="flex gap-2 flex-wrap">
           <Button variant="outline" asChild>

@@ -61,11 +61,11 @@ const recentTransactions = [
 
 export default function DashboardPage() {
   return (
-    <div className="space-y-8 p-8 bg-black">
+    <div className="page-content bg-black">
       {/* Page Header */}
-      <div className="space-y-3 border-l-4 border-l-blue-500 pl-5">
-        <h1 className="text-4xl font-bold text-white tracking-tight">Dashboard</h1>
-        <p className="text-gray-400 text-sm font-medium">
+      <div className="page-header border-l-4 border-l-blue-500 pl-5">
+        <h1 className="page-title">Dashboard</h1>
+        <p className="page-subtitle">
           Monitor your business metrics and key performance indicators in real-time
         </p>
       </div>

@@ -82,11 +82,11 @@ export default function SuppliersPage() {
   const count = useMemo(() => providers.length, [providers]);
 
   return (
-    <div className="space-y-8 p-8 bg-black">
+    <div className="page-content bg-black">
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div className="space-y-2 border-l-4 border-l-blue-500 pl-5">
-          <h1 className="text-4xl font-bold text-foreground">Suppliers</h1>
-          <p className="text-muted-foreground text-sm">
+        <div className="page-header border-l-4 border-l-blue-500 pl-5 flex-1">
+          <h1 className="page-title">Suppliers</h1>
+          <p className="page-subtitle">
             Provider accounts from GET /providers (same as Razor fournisseurs list).
           </p>
         </div>

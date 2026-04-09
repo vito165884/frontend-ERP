@@ -107,10 +107,10 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="space-y-8 p-8 bg-black">
-      <div className="border-l-4 border-l-blue-500 pl-5">
-        <h1 className="text-4xl font-bold text-foreground">Products</h1>
-        <p className="text-muted-foreground mt-2 text-sm">
+    <div className="page-content bg-black">
+      <div className="page-header border-l-4 border-l-blue-500 pl-5">
+        <h1 className="page-title">Products</h1>
+        <p className="page-subtitle">
           Manage your product inventory and stock levels.
         </p>
       </div>

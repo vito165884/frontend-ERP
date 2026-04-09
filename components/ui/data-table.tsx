@@ -105,17 +105,17 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <Card>
+    <Card className="card-enhanced">
       <div className="p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h3 className="text-xl font-bold text-foreground">{title}</h3>
+            <h3 className="text-lg font-semibold text-white">{title}</h3>
             {description && (
-              <p className="text-base text-muted-foreground mt-1.5">{description}</p>
+              <p className="text-sm text-gray-400 mt-1.5">{description}</p>
             )}
           </div>
           {onAddClick && (
-            <Button onClick={onAddClick}>
+            <Button onClick={onAddClick} className="bg-blue-600 hover:bg-blue-700 text-white">
               <Plus className="mr-2 h-5 w-5" />
               Add New
             </Button>
@@ -124,12 +124,12 @@ export function DataTable<T extends Record<string, any>>({
 
         {onSearchChange && (
           <div className="mb-6 relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-400" />
             <Input
               placeholder={searchPlaceholder}
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              className="pl-12 bg-secondary/30"
+              className="pl-12 bg-white/5 border-white/10 focus:border-blue-500"
             />
           </div>
         )}
@@ -137,7 +137,7 @@ export function DataTable<T extends Record<string, any>>({
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-border">
+              <tr className="border-b border-blue-500/30 bg-blue-500/5">
                 {selectable && (
                   <th className="px-4 py-3 w-12">
                     <Checkbox
@@ -151,7 +151,7 @@ export function DataTable<T extends Record<string, any>>({
                   <th
                     key={column.id ?? String(column.key)}
                     className={cn(
-                      'px-5 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider',
+                      'px-5 py-3 text-left text-xs font-semibold text-blue-300 uppercase tracking-wider',
                       column.width
                     )}
                   >
@@ -194,8 +194,9 @@ export function DataTable<T extends Record<string, any>>({
                   <tr
                     key={String(getRowStableId(row, idx))}
                     className={cn(
-                      'border-b border-border/50 hover:bg-secondary/30 transition-all duration-200',
-                      selectedRows.has(getRowStableId(row, idx)) && 'bg-secondary/50'
+                      'border-b border-white/5 hover:bg-blue-500/10 transition-all duration-200',
+                      idx % 2 === 0 && 'bg-white/2',
+                      selectedRows.has(getRowStableId(row, idx)) && 'bg-blue-500/20'
                     )}
                   >
                     {selectable && (
