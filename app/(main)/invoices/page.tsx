@@ -269,34 +269,34 @@ export default function InvoicesPage() {
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-8 bg-black">
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div className="space-y-2">
-          <h1 className="text-5xl font-bold text-foreground">Invoices</h1>
-          <p className="text-muted-foreground text-base">Search, validate, and export invoices (same endpoints as Razor).</p>
+        <div className="space-y-2 border-l-4 border-l-blue-500 pl-5">
+          <h1 className="text-4xl font-bold text-foreground">Invoices</h1>
+          <p className="text-muted-foreground text-sm">Search, validate, and export invoices (same endpoints as Razor).</p>
         </div>
 
         <div className="flex gap-2 flex-wrap">
-          <Button variant="outline" className="gap-2" onClick={onValidateSelection} disabled={!selectedInvoices.length || loading}>
+          <Button variant="outline" className="gap-2 hover:bg-blue-600/20 hover:border-blue-500/50 hover:text-blue-400" onClick={onValidateSelection} disabled={!selectedInvoices.length || loading}>
             <CheckCircle2 className="h-4 w-4" />
             Validate selection
           </Button>
-          <Button variant="outline" className="gap-2" onClick={onExportSage} disabled={loading}>
+          <Button variant="outline" className="gap-2 hover:bg-blue-600/20 hover:border-blue-500/50 hover:text-blue-400" onClick={onExportSage} disabled={loading}>
             <FileDown className="h-4 w-4" />
             Export Sage
           </Button>
-          <Button variant="outline" className="gap-2" onClick={onExportExcel} disabled={loading}>
+          <Button variant="outline" className="gap-2 hover:bg-blue-600/20 hover:border-blue-500/50 hover:text-blue-400" onClick={onExportExcel} disabled={loading}>
             <Table className="h-4 w-4" />
             Export Excel
           </Button>
-          <Button variant="outline" className="gap-2" onClick={onExportPdf} disabled={loading}>
+          <Button variant="outline" className="gap-2 hover:bg-blue-600/20 hover:border-blue-500/50 hover:text-blue-400" onClick={onExportPdf} disabled={loading}>
             <FileType className="h-4 w-4" />
             Export PDF
           </Button>
         </div>
       </div>
 
-      <Card className="p-4 border-border">
+      <Card className="p-4 border-border border-l-4 border-l-blue-500 hover:border-blue-500/60 transition-colors">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
           <div className="space-y-1">
             <div className="text-sm text-muted-foreground">Period</div>
@@ -336,7 +336,7 @@ export default function InvoicesPage() {
             <TagsMultiSelect value={selectedTagIds} onChange={(ids) => setSelectedTagIds(ids)} />
           </div>
           <div className="flex gap-2 md:justify-end">
-            <Button onClick={load} disabled={loading} className="w-full">
+            <Button onClick={load} disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
               {loading ? 'Loading...' : 'Search'}
             </Button>
           </div>
@@ -355,6 +355,7 @@ export default function InvoicesPage() {
                 <Button
                   variant="outline"
                   size="sm"
+                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50 disabled:opacity-50"
                   disabled={row.statut === 1 || loading}
                   onClick={() => onValidateOne(row.number)}
                   title="Validate"

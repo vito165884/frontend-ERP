@@ -69,11 +69,11 @@ export default function CustomersPage() {
   };
 
   return (
-    <div className="space-y-8 p-8">
+    <div className="space-y-8 p-8 bg-black">
       <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div className="space-y-2">
-          <h1 className="text-5xl font-bold text-foreground">Customers</h1>
-          <p className="text-muted-foreground text-base">
+        <div className="space-y-2 border-l-4 border-l-blue-500 pl-5">
+          <h1 className="text-4xl font-bold text-foreground">Customers</h1>
+          <p className="text-muted-foreground text-sm">
             Manage your customer accounts and relationships.
           </p>
         </div>
@@ -99,6 +99,7 @@ export default function CustomersPage() {
                   variant="outline"
                   size="icon"
                   title="View"
+                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
                   onClick={() => router.push(`/customers/${row.id}`)}
                 >
                   <Eye className="h-4 w-4" />
@@ -107,6 +108,7 @@ export default function CustomersPage() {
                   variant="outline"
                   size="icon"
                   title="Edit"
+                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
                   onClick={() => router.push(`/customers/${row.id}/edit`)}
                 >
                   <Pencil className="h-4 w-4" />
@@ -115,7 +117,7 @@ export default function CustomersPage() {
                   variant="outline"
                   size="icon"
                   title="Delete"
-                  className="text-red-600 hover:text-red-700"
+                  className="text-red-600 hover:text-red-500 hover:bg-red-600/20 hover:border-red-500/50"
                   onClick={async () => {
                     if (!confirm('Delete this customer?')) return;
                     await deleteCustomer(row.id);
