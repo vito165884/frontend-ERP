@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { deleteCustomer, getCustomers, type Customer } from '@/lib/api/customers';
+import { SkeletonTable } from '@/components/ui/skeleton';
 
 const columns: Column<Customer>[] = [
   { key: 'name', label: 'Customer Name', sortable: true, width: '240px' },
@@ -81,67 +82,72 @@ export default function CustomersPage() {
 
 
       {error ? (
-        <Card className="p-4 border-border">
-          <div className="text-sm text-red-600">{error}</div>
+        <Card className="p-4 border border-red-500/30 bg-red-500/10">
+          <div className="text-sm text-red-400">{error}</div>
         </Card>
       ) : null}
 
-      <DataTable
-        columns={[
-          ...columns,
-          {
-            key: 'id',
-            label: 'Actions',
-            sortable: false,
-            render: (_value, row) => (
-              <div className="flex gap-2 justify-end">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  title="View"
-                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
-                  onClick={() => router.push(`/customers/${row.id}`)}
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  title="Edit"
-                  className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
-                  onClick={() => router.push(`/customers/${row.id}/edit`)}
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  title="Delete"
-                  className="text-red-600 hover:text-red-500 hover:bg-red-600/20 hover:border-red-500/50"
-                  onClick={async () => {
-                    if (!confirm('Delete this customer?')) return;
-                    await deleteCustomer(row.id);
-                    setCustomers((prev) => prev.filter((c) => c.id !== row.id));
-                    setFilteredCustomers((prev) => prev.filter((c) => c.id !== row.id));
-                  }}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-            ),
-          } as Column<Customer>,
-        ]}
-        data={filteredCustomers}
-        title="Customer List"
-        description="View and manage all customer accounts"
-        searchPlaceholder="Search by name, email, or phone..."
-        onSearchChange={handleSearch}
-        onAddClick={() => router.push('/customers/create')}
-      />
-
       {loading ? (
-        <div className="text-sm text-muted-foreground">Loading...</div>
-      ) : null}
+        <Card>
+          <div className="p-6">
+            <h3 className="text-lg font-semibold text-white mb-4">Customer List</h3>
+            <SkeletonTable />
+          </div>
+        </Card>
+      ) : (
+        <DataTable
+          columns={[
+            ...columns,
+            {
+              key: 'id',
+              label: 'Actions',
+              sortable: false,
+              render: (_value, row) => (
+                <div className="flex gap-2 justify-end">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    title="View"
+                    className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
+                    onClick={() => router.push(`/customers/${row.id}`)}
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    title="Edit"
+                    className="hover:bg-blue-600/20 hover:text-blue-400 hover:border-blue-500/50"
+                    onClick={() => router.push(`/customers/${row.id}/edit`)}
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    title="Delete"
+                    className="text-red-600 hover:text-red-500 hover:bg-red-600/20 hover:border-red-500/50"
+                    onClick={async () => {
+                      if (!confirm('Delete this customer?')) return;
+                      await deleteCustomer(row.id);
+                      setCustomers((prev) => prev.filter((c) => c.id !== row.id));
+                      setFilteredCustomers((prev) => prev.filter((c) => c.id !== row.id));
+                    }}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ),
+            } as Column<Customer>,
+          ]}
+          data={filteredCustomers}
+          title="Customer List"
+          description="View and manage all customer accounts"
+          searchPlaceholder="Search by name, email, or phone..."
+          onSearchChange={handleSearch}
+          onAddClick={() => router.push('/customers/create')}
+        />
+      )}
     </div>
   );
 }

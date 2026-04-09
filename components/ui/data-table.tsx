@@ -2,6 +2,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ChevronUp, ChevronDown, Search, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -178,11 +179,23 @@ export function DataTable<T extends Record<string, any>>({
             </thead>
             <tbody>
               {loading ? (
-                <tr>
-                  <td colSpan={columns.length + (selectable ? 1 : 0)} className="px-4 py-8 text-center text-muted-foreground">
-                    Loading...
-                  </td>
-                </tr>
+                Array.from({ length: 6 }).map((_, rowIdx) => (
+                  <tr key={`skeleton-${rowIdx}`} className="border-b border-white/5 bg-white/5">
+                    {selectable && (
+                      <td className="px-5 py-3 w-12">
+                        <Skeleton className="h-4 w-4" />
+                      </td>
+                    )}
+                    {columns.map((column) => (
+                      <td
+                        key={column.id ?? String(column.key)}
+                        className={cn('px-5 py-3', column.width)}
+                      >
+                        <Skeleton className="h-4 w-32" />
+                      </td>
+                    ))}
+                  </tr>
+                ))
               ) : sortedData.length === 0 ? (
                 <tr>
                   <td colSpan={columns.length + (selectable ? 1 : 0)} className="px-4 py-8 text-center text-muted-foreground">

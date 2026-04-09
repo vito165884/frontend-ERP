@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { deleteProvider, getProviders, type Provider } from '@/lib/api/providers';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const columns: Column<Provider>[] = [
   {
@@ -95,14 +96,22 @@ export default function SuppliersPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card className="p-6 border-border border-l-4 border-l-blue-500 hover:border-blue-500/60 transition-colors">
           <p className="text-sm font-medium text-blue-400">Loaded</p>
-          <p className="text-3xl font-bold text-foreground mt-2">{count}</p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-foreground mt-2">{count}</p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">First page (max 50)</p>
         </Card>
         <Card className="p-6 border-border border-l-4 border-l-blue-500 hover:border-blue-500/60 transition-colors">
           <p className="text-sm font-medium text-blue-400">Manufacturers</p>
-          <p className="text-3xl font-bold text-foreground mt-2">
-            {providers.filter((p) => p.constructeur).length}
-          </p>
+          {loading ? (
+            <Skeleton className="h-10 w-16 mt-2" />
+          ) : (
+            <p className="text-3xl font-bold text-foreground mt-2">
+              {providers.filter((p) => p.constructeur).length}
+            </p>
+          )}
           <p className="text-xs text-muted-foreground mt-2">constructeur = true</p>
         </Card>
       </div>
