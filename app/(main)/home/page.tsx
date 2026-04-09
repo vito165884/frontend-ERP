@@ -138,7 +138,7 @@ export default function HomePage() {
         {quickAccessItems.map((item) => (
           <Card
             key={item.title}
-            className={`card-interactive group relative overflow-hidden border-l-4 border-l-blue-500`}
+            className={`group relative overflow-hidden border-l-4 border-l-blue-500 hover:border-blue-400`}
           >
             <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-40`} />
             <div className="relative p-6">
@@ -184,14 +184,14 @@ export default function HomePage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {secondaryItems.map((item) => (
             <Link key={item.href} href={item.href}>
-              <Card className="p-4 border-border hover:border-blue-500/50 hover:bg-blue-600/10 transition-all duration-300 group">
+              <Card className="p-4 hover:shadow-md hover:border-blue-500/40 transition-all duration-300 group cursor-pointer">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:text-blue-300 transition-colors">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
-                    <p className="text-xs text-muted-foreground">{item.description}</p>
+                    <p className="text-sm font-semibold text-white">{item.title}</p>
+                    <p className="text-xs text-gray-400">{item.description}</p>
                   </div>
                 </div>
               </Card>

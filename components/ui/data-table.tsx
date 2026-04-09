@@ -105,7 +105,7 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <Card className="card-enhanced">
+    <Card>
       <div className="p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
           <div>
@@ -211,7 +211,7 @@ export function DataTable<T extends Record<string, any>>({
                     {columns.map((column) => (
                       <td
                         key={column.id ?? String(column.key)}
-                        className={cn('px-5 py-4 text-muted-foreground text-base', column.width)}
+                        className={cn('px-5 py-3 text-gray-300 text-sm', column.width)}
                       >
                         {column.render
                           ? column.render(row[column.key], row)
